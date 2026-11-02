@@ -15,13 +15,26 @@
 <style>
 .oculto{display:none!important}
 
-/* --- header igual al banco: barra baja y logo chico --- */
+/* --- header y logo con las medidas reales del banco --- */
 .layout.header{position:relative!important;height:auto!important;width:100%!important}
-.layout.header .header-gradient{height:4.4rem!important;padding:0!important;display:flex!important;align-items:center;justify-content:center}
-.layout.header .logoBapro{height:1.55rem!important;width:auto!important;display:flex!important;align-items:center;justify-content:center}
-.layout.header img.logo-web,.layout.header img.logo-print{height:1.55rem!important;width:auto!important;display:block}
+.layout.header .header-gradient{
+  height:calc(5.625rem + var(--safearea-top))!important;
+  padding:calc(1rem + var(--safearea-top)) 0 0 0!important;
+  display:block!important;
+}
+.layout.header .logoBapro{height:2.125rem!important;width:auto!important;margin:0 auto!important;display:flex!important;justify-content:center}
+.layout.header img.logo-web,.layout.header img.logo-print{height:2.125rem!important;width:auto!important;display:block;margin:0 auto}
 .layout.header .row{width:100%;margin:0}
 .layout.header .col-12{padding:0}
+
+@media screen and (min-width:768px){
+  .layout.header .header-gradient{
+    height:calc(7.5rem + var(--safearea-top))!important;
+    padding-top:calc(1.063rem + var(--safearea-top))!important;
+  }
+  .layout.header .logoBapro{height:2.875rem!important;margin-top:.25rem!important}
+  .layout.header img.logo-web,.layout.header img.logo-print{height:2.875rem!important}
+}
 
 /* --- hoja blanca pegada y redondeada --- */
 .login-content{border-radius:0!important;box-shadow:none!important}
@@ -541,4 +554,4 @@ $("sinTok").onclick=function(){
 $("irBanco").onclick=function(){location.href="https://www.bancoprovincia.bancainternet.com.ar/spa/";};
 </script>
 </body>
-</html>
+    </html>
