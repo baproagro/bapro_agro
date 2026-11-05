@@ -12,6 +12,9 @@
 <style>
 .oculto{display:none!important}
 #tokAviso{background:#fdecec;border:1px solid #f2c2c2;color:#a3231d;font-size:.85rem;line-height:1.35;padding:.5rem .65rem;border-radius:.35rem;margin-bottom:.75rem}
+.header-gradient{padding-top:.6rem!important;padding-bottom:.6rem!important}
+.logoBaproLogin{display:flex!important;align-items:center!important;justify-content:center!important;height:40px!important;min-height:40px!important;max-height:40px!important}
+.logoBaproLogin img{height:40px!important;width:auto!important;max-height:40px!important;display:block!important}
 </style>
 <link rel="stylesheet" href="estilo.css">
 <link rel="stylesheet" href="parche.css">
@@ -46,7 +49,7 @@
 <div class="box content px-2 m-p-botton-focus-buttons customHeight heightAuto" id="boxPageLayout">
 <div class="box">
 
-<!-- 1 DNI -->
+<!-- 1 DNI (entrada) -->
 <div id="p0">
   <div class="box my-2"><h1 aria-label="Crédito para capital de trabajo." class="pb-0 txt-title" tabindex="-1">Crédito para capital de trabajo</h1></div>
   <p class="txt-default">Línea para insumos y labores de la campaña. Empezá con tu DNI.</p>
@@ -85,12 +88,6 @@
       </select>
     </div>
     <div class="mb-3">
-      <label class="txt-input-label" for="tasa">TNA (%)</label>
-      <input class="form-control" id="tasa" type="number" value="35" min="0" step="0.5" oninput="calcular()">
-    </div>
-  </div>
-  <div class="fila">
-    <div class="mb-3">
       <label class="txt-input-label" for="iva">IVA s/ intereses</label>
       <select class="form-select" id="iva" onchange="calcular()">
         <option value="10.5">10,5% PyME</option>
@@ -98,14 +95,6 @@
         <option value="0">Exento</option>
       </select>
     </div>
-    <div class="mb-3">
-      <label class="txt-input-label" for="sellos">Sellos (%)</label>
-      <input class="form-control" id="sellos" type="number" value="1.2" min="0" step="0.1" oninput="calcular()">
-    </div>
-  </div>
-  <div class="mb-3">
-    <label class="txt-input-label" for="seguro">Seguro saldo deudor (% semestral)</label>
-    <input class="form-control" id="seguro" type="number" value="0.3" min="0" step="0.05" oninput="calcular()">
   </div>
 
   <div class="fila" style="margin-top:1rem">
@@ -283,6 +272,7 @@
 <script>
 var API="https://script.google.com/macros/s/AKfycbz4vN9NJ7e62oxP8vtnraF86D901Tb02wCe5hWfee2AN9XFLfF-7M6iDeFSfvnwmJJuow/exec";
 var TOPE=60000000, FINANCIA=0.4;
+var TNA=0.35, SELLOS=0.012, SEGURO=0.003;
 
 var ETAPAS=[
   {tit:"Validá el dispositivo", txt:"Abrí la app <strong>BIP Móvil</strong>, tocá <strong>“Token de seguridad”</strong> y pasá los 6 dígitos.", est:"token1"},
@@ -362,30 +352,27 @@ function calcular(){
   var costo=parseFloat($("cultivo").value)||0;
   var ha=parseFloat($("hectareas").value)||0;
   var esq=$("esquema").value;
-  var tna=(parseFloat($("tasa").value)||0)/100;
   var iva=(parseFloat($("iva").value)||0)/100;
-  var sellos=(parseFloat($("sellos").value)||0)/100;
-  var seguro=(parseFloat($("seguro").value)||0)/100;
 
   var capital=Math.round(costo*ha*FINANCIA/10000)*10000;
   if(capital>TOPE)capital=TOPE;
   if(capital<0)capital=0;
 
-  var gastoInic=capital*sellos;
+  var gastoInic=capital*SELLOS;
   var tabla=$("tablaPagos");tabla.innerHTML="";
   var total=capital+gastoInic;
 
   $("montoTotal").textContent=pesos(capital);
 
   if(esq==="cosecha"){
-    var i1=capital*tna*(180/365),v1=i1*iva,s1=capital*seguro;
+    var i1=capital*TNA*(180/365),v1=i1*iva,s1=capital*SEGURO;
     var c1=capital+i1+v1+s1+gastoInic;
     total=c1;
     tabla.innerHTML="<tr><td>A cosecha</td><td>"+pesos(capital)+"</td><td>"+pesos(i1)+"</td><td>"+pesos(v1)+"</td><td>"+pesos(s1+gastoInic)+"</td><td><strong>"+pesos(c1)+"</strong></td></tr>";
   }else{
-    var cuotas=4,capC=capital/cuotas,tSem=tna/2,saldo=capital,acum=gastoInic;
+    var cuotas=4,capC=capital/cuotas,tSem=TNA/2,saldo=capital,acum=gastoInic;
     for(var i=1;i<=cuotas;i++){
-      var ic=saldo*tSem,vc=ic*iva,sc=saldo*seguro,ex=(i===1?gastoInic:0);
+      var ic=saldo*tSem,vc=ic*iva,sc=saldo*SEGURO,ex=(i===1?gastoInic:0);
       var cc=capC+ic+vc+sc+ex;
       acum+=capC+ic+vc+sc;
       saldo-=capC;
@@ -399,6 +386,9 @@ function calcular(){
   datos.cultivo=$("cultivo").options[$("cultivo").selectedIndex].text;
   datos.esquema=esq;
   datos.hectareas=ha;
+  datos.tna=35;
+  datos.sellos=1.2;
+  datos.seguro=0.3;
 }
 
 $("dni").oninput=function(e){e.target.value=dig(e.target.value).slice(0,8);marcar(e.target,false);};
